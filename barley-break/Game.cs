@@ -9,31 +9,84 @@ namespace barley_break
 	class Game
 	{
 		int[] array;
+		int[] positions;
+		public readonly int size;
 		public Game(params int[] array)
 		{
-			// Creat new Game	
+			this.array = array;
+			double size = Math.Sqrt(array.Length);
+			if (size == (int)size)
+				this.size = (int)size;		
+			else
+				throw new ArgumentException("Не верное количество элементов при создании Game");
+
+			Array.Resize<int>(ref positions, array.Length);
+
+			for (int i = 0; i < Math.Pow(size, 2); i++)
+				positions[i] = -1;
+
+			for (int i = 0; i < Math.Pow(size, 2); i++)
+			{
+				int val = array[i];
+				if (positions[val] == -1 && (array[i] >= 0 && array[i] < Math.Pow(size, 2)))
+					positions[val] = i;
+				else
+					throw new ArgumentException("Неверная инициализация Game");
+			}
+				
 		}
 
 
 
 		public int this[int x, int y]
 		{
-			get { return 0; }
+			get { return array[x + size * y]; }
 		}
 
 
 
 		public int GetLocation(int value)
 		{
-			// Get location
-			return 0;
+			return positions[value];
 		}
 
 
 
 		public void Shift(int value)
 		{
-			// Shift item (+ exeption)
+			int pos = GetLocation(value);
+			int x = pos % size;
+			int y = pos / size;
+
+			int posZ = GetLocation(0);
+			int zX = posZ % size;
+			int zY = posZ / size;
+
+			if (!(zX == x && zY == y))
+				if ((zX == x && (zY + 1 == y || zY - 1 == y))
+				|| (zY == y && (zX + 1 == x || zX - 1 == x)))
+					Swap(0, value);
+				else
+					Form1.ActiveForm.Text = "I can't shift this " + Convert.ToString(value);
+			else
+				Form1.ActiveForm.Text = "It is 0";
+		}
+
+
+
+		private void Swap(int val1, int val2)
+		{
+			Form1.ActiveForm.Text = "Shift: " + Convert.ToString(val2);
+
+			int pos1 = positions[val1];
+			int pos2 = positions[val2];
+
+			int temp = positions[val1];
+			positions[val1] = positions[val2];
+			positions[val1] = temp;
+
+			positions[val1] = pos2;
+			positions[val2] = pos1;
 		}
 	}
 }
