@@ -10,12 +10,18 @@ namespace barley_break
 {
 	class GameCanvas
 	{
-		const int LENGHT = 380;
+		int posX = 30;
+		int posY = 30;
+		int lenght = 420;
+		int size = 4;
+
 		Graphics g;
 		Game game;
-		SolidBrush foundBrush;
-		SolidBrush itemBrush;
-		SolidBrush formColor;
+		Color gridColor;
+		Color itemColor;
+		Color emptyColor;
+		Color formColor;
+
 
 
 		public GameCanvas(Graphics g, Game game)
@@ -23,45 +29,51 @@ namespace barley_break
 			this.g = g;
 			this.game = game;
 
-			foundBrush = new SolidBrush(Color.FromArgb(181, 164, 148));
-			itemBrush = new SolidBrush(Color.FromArgb(205, 192, 180));
-			formColor = new SolidBrush(Color.FromArgb(251, 249, 237));
+			formColor = Color.FromArgb(250, 248, 239);
+			gridColor = Color.FromArgb(187, 173, 160);
+			itemColor = Color.FromArgb(238, 228, 218);
+			emptyColor = Color.FromArgb(205, 192, 180);
 		}
 
 
 
 		public void DrawGrid()
 		{
-			//DrawRoundRec(foundBrush, 20, 20, LENGHT, LENGHT);
-			g.FillRectangle(formColor, 0, 0, Form1.ActiveForm.Size.Height, Form1.ActiveForm.Size.Width);
+			g.FillRectangle(new SolidBrush(formColor),
+				            0, 0, Form1.ActiveForm.Size.Height, Form1.ActiveForm.Size.Width);
 
-			int posX = 10;
-			int posY = 10;
-			int lenght = 100;
-			for (int i = 0; i < 4; i++)
+			int len = lenght / size;
+			int ind = len / 19;
+
+			DrawRoundRec(gridColor, posX, posY, lenght + ind, lenght + ind, 10);
+
+			for (int i = 0; i < size; i++)
 			{
-				for (int j = 0; j < 4; j++)
+				for (int j = 0; j < size; j++)
 				{
-					int x = posX + i * (lenght + 20);
-					int y = posY + j * (lenght + 20);
-					DrawRoundRec(itemBrush, x, y, lenght, lenght);
+					int x = posX + i * len + ind;
+					int y = posY + j * len + ind;
+					DrawRoundRec(itemColor, x, y, len - ind, len - ind);
 				}
 			}
-		}
+
+		}	
 
 
 
-		private void DrawRoundRec(SolidBrush brush ,int x, int y, int width, int height)
+		private void DrawRoundRec(Color color ,int x, int y, int width, int height, int round = 0)
 		{
-			int round = 10;
+			SolidBrush brush = new SolidBrush(color);
+			if (round == 0)
+				round = width / 5;
 
 			g.FillEllipse(brush, x, y, round, round);
-			g.FillEllipse(brush, x + width, y, round, round);
-			g.FillEllipse(brush, x, y + height, round, round);
-			g.FillEllipse(brush, x + width, y + height, round, round);
+			g.FillEllipse(brush, x + width - round, y, round, round);
+			g.FillEllipse(brush, x, y + height - round, round, round);
+			g.FillEllipse(brush, x + width - round, y + height - round, round, round);
 			int hround = round / 2;
-			g.FillRectangle(brush, x + hround, y, width, height + round);
-			g.FillRectangle(brush, x, y + hround, width + round, height);
+			g.FillRectangle(brush, x, y + hround, width, height - round);
+			g.FillRectangle(brush, x + hround, y, width - round, height);
 		}
 	}
 }
