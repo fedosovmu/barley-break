@@ -40,6 +40,7 @@
 			this.Text = "Form1";
 			this.Shown += new System.EventHandler(this.Form1_Shown);
 			this.Click += new System.EventHandler(this.Form1_Click);
+			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
 			this.ResumeLayout(false);
 
 		}

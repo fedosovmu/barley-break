@@ -33,6 +33,21 @@ namespace barley_break
 			gridColor = Color.FromArgb(187, 173, 160);
 			itemColor = Color.FromArgb(238, 228, 218);
 			emptyColor = Color.FromArgb(205, 192, 180);
+
+			Bitmap b = new Bitmap(100, 100);
+			Graphics gg = Graphics.FromImage(b);
+			
+		}
+
+
+
+		public void Click(int x, int y)
+		{
+			DrawGrid();	
+			String st = String.Format("X: {0} Y: {1}", x, y);
+			Font font = new Font("Arial", 16);
+			SolidBrush brush = new SolidBrush(Color.Black);
+			g.DrawString(st, font, brush, 0, 0);
 		}
 
 
@@ -40,7 +55,7 @@ namespace barley_break
 		public void DrawGrid()
 		{
 			g.FillRectangle(new SolidBrush(formColor),
-				            0, 0, Form1.ActiveForm.Size.Height, Form1.ActiveForm.Size.Width);
+				            0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
 
 			int len = lenght / size;
 			int ind = len / 19;

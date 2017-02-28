@@ -31,7 +31,17 @@ namespace barley_break
 
 		private void Form1_Click(object sender, EventArgs e)
 		{
-			gameCanvas.DrawGrid();
+			int x = Cursor.Position.X;
+			int y = Cursor.Position.Y;
+			Point p = PointToClient( new Point(x, y) );
+			gameCanvas.Click(p.X, p.Y);
+		}
+
+
+
+		private void Form1_MouseMove(object sender, MouseEventArgs e)
+		{
+			// <- Ё-хо-хо здесь будет подсветка кнопок
 		}
 	}
 }
