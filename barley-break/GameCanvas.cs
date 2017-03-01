@@ -52,14 +52,18 @@ namespace barley_break
 			int Y = (y - posY) / len;
 			st += String.Format("    [{0}][{1}] ", X, Y);
 
-			if ((X >= 0 && X < size) && (Y >= 0 && Y < size) &&
-				(x - posX) > 0 && (y - posY) > 0)
-				game.Shift(game[X, Y]);
-			else
-				Form1.ActiveForm.Text = "Nope";
+			if ((X >= 0 && X < size) && (Y >= 0 && Y < size) && (x - posX) > 0 && (y - posY) > 0)
+			{
 
-			DrawGrid();
-			g.DrawString(st, font, brush, 0, 0);
+				game.Shift(game[X, Y]);
+				DrawGrid();
+				g.DrawString("[" + X + "] [" + Y + "]", font, brush, 0, 0);
+			}
+			else
+			{
+				DrawGrid();
+				g.DrawString("Nope", font, brush, 0, 0);
+			}
 		}
 
 

@@ -65,28 +65,27 @@ namespace barley_break
 			if (!(zX == x && zY == y))
 				if ((zX == x && (zY + 1 == y || zY - 1 == y))
 				|| (zY == y && (zX + 1 == x || zX - 1 == x)))
-					Swap(0, value);
+					Swap(value);
 				else
-					Form1.ActiveForm.Text = "I can't shift this " + Convert.ToString(value);
+					Form1.ActiveForm.Text = "I can't shift " + Convert.ToString(value);
 			else
 				Form1.ActiveForm.Text = "It is 0";
 		}
 
 
 
-		private void Swap(int val1, int val2)
+		private void Swap(int val)
 		{
-			Form1.ActiveForm.Text = "Shift: " + Convert.ToString(val2);
+			Form1.ActiveForm.Text = "Shift: " + val.ToString();
 
-			int pos1 = positions[val1];
-			int pos2 = positions[val2];
+			int pos0 = GetLocation(0);
+			int pos1 = GetLocation(val);
 
-			int temp = positions[val1];
-			positions[val1] = positions[val2];
-			positions[val1] = temp;
+			array[pos0] = val;
+			array[pos1] = 0;
 
-			positions[val1] = pos2;
-			positions[val2] = pos1;
+			positions[val] = pos0;
+			positions[0] = pos1;
 		}
 	}
 }
