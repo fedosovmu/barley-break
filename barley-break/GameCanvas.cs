@@ -55,6 +55,7 @@ namespace barley_break
 
 		public void Move(int x, int y)
 		{
+			DrawGrid();
 			int X = (x - posX) / len;
 			int Y = (y - posY) / len;
 
@@ -94,7 +95,7 @@ namespace barley_break
 			SolidBrush formBrush = new SolidBrush(formColor);
 			g.FillRectangle(formBrush, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
 
-			DrawRoundRec(gridColor, posX, posY, lenght + ind, lenght + ind, 10);
+			DrawRoundRec(g, gridColor, posX, posY, lenght + ind, lenght + ind, 10);
 
 			for (int i = 0; i < game.size; i++)
 				for (int j = 0; j < game.size; j++)
@@ -127,14 +128,14 @@ namespace barley_break
 			int value = game[x, y];
 			String st = value.ToString();
 
-			DrawRoundRec(color, X, Y, len - ind, len - ind);
+			DrawRoundRec(g, color, X, Y, len - ind, len - ind);
 			if (showValue)
 				g.DrawString(st, font, fontBrush, X, Y);								
 		}	
 
 
 
-		private void DrawRoundRec(Color color ,int x, int y, int width, int height, int round = 0)
+		public static void DrawRoundRec(Graphics g, Color color ,int x, int y, int width, int height, int round = 0)
 		{
 			SolidBrush brush = new SolidBrush(color);
 			if (round == 0)

@@ -14,6 +14,7 @@ namespace barley_break
 	{
 		GameCanvas gameCanvas;
 		Bitmap btm;
+		GameButton loadGameButton;
 		public Form1()
 		{
 			InitializeComponent();
@@ -40,6 +41,7 @@ namespace barley_break
 			Graphics g = Graphics.FromImage(btm);
 
 			gameCanvas = new GameCanvas(g, game);
+			loadGameButton = new GameButton(g, 30, 500, "Load Game");
 
 			this.DoubleBuffered = true;
 			this.BackgroundImage = btm;
@@ -53,7 +55,10 @@ namespace barley_break
 			int x = Cursor.Position.X;
 			int y = Cursor.Position.Y;
 			Point p = PointToClient( new Point(x, y) );
+
 			gameCanvas.Click(p.X, p.Y);
+			loadGameButton.Click(p.X, p.Y);
+
 			this.Refresh();
 		}
 
@@ -61,13 +66,13 @@ namespace barley_break
 
 		private void Form1_MouseMove(object sender, MouseEventArgs e)
 		{
-			gameCanvas.DrawGrid();
-
 			int x = Cursor.Position.X;
 			int y = Cursor.Position.Y;
 			Point p = PointToClient(new Point(x, y));
 
 			gameCanvas.Move(p.X, p.Y);
+			loadGameButton.Move(p.X, p.Y);
+
 			this.Refresh();
 		}
 	}
