@@ -13,6 +13,7 @@ namespace barley_break
 	public partial class Form1 : Form
 	{
 		GameCanvas gameCanvas;
+		Bitmap btm;
 		public Form1()
 		{
 			InitializeComponent();
@@ -26,10 +27,16 @@ namespace barley_break
 			int[] b = { 7, 6, 5, 8, 2, 1, 0, 3, 4 };
 			int[] c = { 6, 14, 0, 11, 13, 10, 1, 2, 9, 8, 7, 15, 5, 4, 3, 12 };
 
-			Game game = new Game(c);
+			Game game = new Game(b);
 
-			Graphics g = this.CreateGraphics();
+			btm = new Bitmap(this.Size.Width, this.Size.Height);
+			Graphics g = Graphics.FromImage(btm);
+
 			gameCanvas = new GameCanvas(g, game);
+
+			this.DoubleBuffered = true;
+			this.BackgroundImage = btm;
+			this.Refresh();
 		}
 
 
@@ -40,6 +47,7 @@ namespace barley_break
 			int y = Cursor.Position.Y;
 			Point p = PointToClient( new Point(x, y) );
 			gameCanvas.Click(p.X, p.Y);
+			this.Refresh();
 		}
 
 
@@ -47,6 +55,8 @@ namespace barley_break
 		private void Form1_MouseMove(object sender, MouseEventArgs e)
 		{
 			// <- Ё-хо-хо здесь будет подсветка кнопок, когда я сделаю нормальную отрисовку без мерцания
+			gameCanvas.DrawGrid();
+			this.Refresh();
 		}
 	}
 }

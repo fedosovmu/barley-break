@@ -13,6 +13,8 @@ namespace barley_break
 		int posX = 30;
 		int posY = 30;
 		int lenght = 420;
+		int len;
+		int ind;
 
 		Graphics g;
 		Game game;
@@ -22,6 +24,7 @@ namespace barley_break
 		Color itemColor;
 		Color emptyColor;
 		Color fontColor;
+		Color yelowItemColor;
 
 
 
@@ -35,6 +38,10 @@ namespace barley_break
 			itemColor = Color.FromArgb(238, 228, 218);
 			emptyColor = Color.FromArgb(205, 192, 180);
 			fontColor = Color.FromArgb(119, 119, 101);
+			yelowItemColor = Color.FromArgb(237, 224, 200);
+
+			len = lenght / game.size;
+			ind = len / 19;
 
 			DrawGrid();
 		}
@@ -46,22 +53,17 @@ namespace barley_break
 			Font font = new Font("Arial", 16);
 			SolidBrush brush = new SolidBrush(fontColor);
 
-			int len = lenght / game.size;
 			int X = (x - posX) / len;
 			int Y = (y - posY) / len;
 
 			if ((X >= 0 && X < game.size) && (Y >= 0 && Y < game.size) && (x - posX) > 0 && (y - posY) > 0)
 			{
-
 				game.Shift(game[X, Y]);
 				DrawGrid();
-				g.DrawString("[" + X + "] [" + Y + "]", font, brush, 0, 0);
 			}
 			else
 			{
 				DrawGrid();
-				g.DrawString("Nope", font, brush, 0, 0);
-				Form1.ActiveForm.Text = "Nope";
 			}
 		}
 
@@ -72,34 +74,39 @@ namespace barley_break
 			SolidBrush formBrush = new SolidBrush(formColor);
 			g.FillRectangle(formBrush, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
 
-			int len = lenght / game.size;
-			int ind = len / 19;
-
-			int fontSize = len / 2;
-			Font font = new Font("Arial", fontSize);
-			SolidBrush brush = new SolidBrush(fontColor);
-
 			DrawRoundRec(gridColor, posX, posY, lenght + ind, lenght + ind, 10);
 
 			for (int i = 0; i < game.size; i++)
-			{
 				for (int j = 0; j < game.size; j++)
-				{
-					int x = posX + i * len + ind;
-					int y = posY + j * len + ind;
-					int value = game[i, j];
-					if (value != 0)
-					{
-						DrawRoundRec(itemColor, x, y, len - ind, len - ind);
+					DrawItem(i, j);
+		}
 
-						String st = value.ToString();
-						g.DrawString(st, font, brush, x, y);
 
-					}
-					else
-						DrawRoundRec(emptyColor, x, y, len - ind, len - ind);
-				}
+
+		private void DrawItem(int x, int y)
+		{
+			int fontSize = len / 2;
+			Font font = new Font("Arial", fontSize);
+			SolidBrush fontBrush = new SolidBrush(fontColor);
+
+			int X = posX + x * len + ind;
+			int Y = posY + y * len + ind;
+			int value = game[x, y];
+			if (value == 0)
+				DrawRoundRec(emptyColor, X, Y, len - ind, len - ind);
+			else if (value == x + y * game.size + 1)
+			{
+				DrawRoundRec(yelowItemColor, X, Y, len - ind, len - ind);
+				String st = value.ToString();
+				g.DrawString(st, font, fontBrush, X, Y);
 			}
+			else
+			{
+				DrawRoundRec(itemColor, X, Y, len - ind, len - ind);
+				String st = value.ToString();
+				g.DrawString(st, font, fontBrush, X, Y);
+
+			}						
 
 		}	
 

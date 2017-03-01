@@ -37,7 +37,7 @@
 			this.ClientSize = new System.Drawing.Size(489, 491);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Text = "Game";
 			this.Shown += new System.EventHandler(this.Form1_Shown);
 			this.Click += new System.EventHandler(this.Form1_Click);
 			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
