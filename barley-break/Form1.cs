@@ -22,14 +22,14 @@ namespace barley_break
 
 		private void Form1_Shown(object sender, EventArgs e)
 		{
-			int[] a = { 1, 3, 2, 0 };
-			int[] b = { 8, 6, 5, 7, 2, 1, 0, 3, 4 };
-			int[] c = { 6, 13, 0, 11, 15, 10, 1, 2, 9, 8, 7, 14, 5, 4, 3, 12 };
-			Game game = new Game(b);
+			int[] a = { 3, 1, 2, 0 };
+			int[] b = { 7, 6, 5, 8, 2, 1, 0, 3, 4 };
+			int[] c = { 6, 14, 0, 11, 13, 10, 1, 2, 9, 8, 7, 15, 5, 4, 3, 12 };
+
+			Game game = new Game(c);
 
 			Graphics g = this.CreateGraphics();
 			gameCanvas = new GameCanvas(g, game);
-			gameCanvas.DrawGrid();
 		}
 
 

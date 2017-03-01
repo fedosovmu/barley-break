@@ -13,10 +13,10 @@ namespace barley_break
 		int posX = 30;
 		int posY = 30;
 		int lenght = 420;
-		int size;
 
 		Graphics g;
 		Game game;
+
 		Color formColor;
 		Color gridColor;
 		Color itemColor;
@@ -24,11 +24,11 @@ namespace barley_break
 		Color fontColor;
 
 
+
 		public GameCanvas(Graphics g, Game game)
 		{
 			this.g = g;
 			this.game = game;
-			this.size = this.game.size;
 
 			formColor = Color.FromArgb(250, 248, 239);
 			gridColor = Color.FromArgb(187, 173, 160);
@@ -36,23 +36,21 @@ namespace barley_break
 			emptyColor = Color.FromArgb(205, 192, 180);
 			fontColor = Color.FromArgb(119, 119, 101);
 
-			Bitmap b = new Bitmap(100, 100);
-			Graphics gg = Graphics.FromImage(b);	
+			DrawGrid();
 		}
 
 
 
 		public void Click(int x, int y)
 		{
-			String st = String.Format("X: {0}    Y: {1}", x, y);
 			Font font = new Font("Arial", 16);
 			SolidBrush brush = new SolidBrush(fontColor);
-			int len = lenght / size;
+
+			int len = lenght / game.size;
 			int X = (x - posX) / len;
 			int Y = (y - posY) / len;
-			st += String.Format("    [{0}][{1}] ", X, Y);
 
-			if ((X >= 0 && X < size) && (Y >= 0 && Y < size) && (x - posX) > 0 && (y - posY) > 0)
+			if ((X >= 0 && X < game.size) && (Y >= 0 && Y < game.size) && (x - posX) > 0 && (y - posY) > 0)
 			{
 
 				game.Shift(game[X, Y]);
@@ -63,6 +61,7 @@ namespace barley_break
 			{
 				DrawGrid();
 				g.DrawString("Nope", font, brush, 0, 0);
+				Form1.ActiveForm.Text = "Nope";
 			}
 		}
 
@@ -70,17 +69,21 @@ namespace barley_break
 
 		public void DrawGrid()
 		{
-			g.FillRectangle(new SolidBrush(formColor),
-				            0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
+			SolidBrush formBrush = new SolidBrush(formColor);
+			g.FillRectangle(formBrush, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
 
-			int len = lenght / size;
+			int len = lenght / game.size;
 			int ind = len / 19;
+
+			int fontSize = len / 2;
+			Font font = new Font("Arial", fontSize);
+			SolidBrush brush = new SolidBrush(fontColor);
 
 			DrawRoundRec(gridColor, posX, posY, lenght + ind, lenght + ind, 10);
 
-			for (int i = 0; i < size; i++)
+			for (int i = 0; i < game.size; i++)
 			{
-				for (int j = 0; j < size; j++)
+				for (int j = 0; j < game.size; j++)
 				{
 					int x = posX + i * len + ind;
 					int y = posY + j * len + ind;
@@ -89,10 +92,7 @@ namespace barley_break
 					{
 						DrawRoundRec(itemColor, x, y, len - ind, len - ind);
 
-						int fontSize = len / 2;
-						String st = Convert.ToString(value);
-						Font font = new Font("Arial", fontSize);
-						SolidBrush brush = new SolidBrush(fontColor);
+						String st = value.ToString();
 						g.DrawString(st, font, brush, x, y);
 
 					}

@@ -11,6 +11,9 @@ namespace barley_break
 		int[] array;
 		int[] positions;
 		public readonly int size;
+
+
+
 		public Game(params int[] array)
 		{
 			this.array = array;
@@ -18,7 +21,7 @@ namespace barley_break
 			if (size == (int)size)
 				this.size = (int)size;		
 			else
-				throw new ArgumentException("Не верное количество элементов при создании Game");
+				throw new ArgumentException("Неверное количество элементов при создании Game");
 
 			Array.Resize<int>(ref positions, array.Length);
 
@@ -28,7 +31,7 @@ namespace barley_break
 			for (int i = 0; i < Math.Pow(size, 2); i++)
 			{
 				int val = array[i];
-				if (positions[val] == -1 && (array[i] >= 0 && array[i] < Math.Pow(size, 2)))
+				if ( val >= 0 && val < Math.Pow(size, 2) && positions[val] == -1)
 					positions[val] = i;
 				else
 					throw new ArgumentException("Неверная инициализация Game");
@@ -54,6 +57,9 @@ namespace barley_break
 
 		public void Shift(int value)
 		{
+			if (value < 0 || value >= Math.Pow(size, 2))
+				throw new ArgumentException("Невозможно передвинуть элемент которого нет в game");
+
 			int pos = GetLocation(value);
 			int x = pos % size;
 			int y = pos / size;
