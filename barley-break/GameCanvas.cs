@@ -53,6 +53,18 @@ namespace barley_break
 
 
 
+		public void LoadGame(String path)
+		{
+			this.game = new Game(csvReader.Load(path));
+
+			len = lenght / game.size;
+			ind = len / 19;
+
+			DrawGrid();
+		}
+
+
+
 		public void Move(int x, int y)
 		{
 			DrawGrid();

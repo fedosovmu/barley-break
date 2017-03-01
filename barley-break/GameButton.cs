@@ -38,15 +38,18 @@ namespace barley_break
 
 
 
-		public void Click(int x, int y)
+		public bool Click(int x, int y)
 		{
 			if (IsMouseHover(x, y))
 			{
 				ReDraw(downButtonColor);
-				// <- фигачим код сюда
+				return true;
 			}
 			else
+			{
 				ReDraw(buttonColor);
+				return false;
+			}
 		}
 
 
@@ -61,14 +64,21 @@ namespace barley_break
 
 
 
-		public bool IsMouseHover(int x, int y)
+		private bool IsMouseHover(int x, int y)
 		{
 			return (x >= X && x <= X + Width && y >= Y && y <= Y + Height);
 		}
 
 
 
-		public void ReDraw(Color color)
+		public void ReDraw()
+		{
+			ReDraw(buttonColor);
+		}
+
+
+
+		private void ReDraw(Color color)
 		{
 			GameCanvas.DrawRoundRec(g, color, X, Y, Width, Height, 10);
 
