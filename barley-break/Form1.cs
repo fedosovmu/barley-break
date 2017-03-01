@@ -61,8 +61,13 @@ namespace barley_break
 
 		private void Form1_MouseMove(object sender, MouseEventArgs e)
 		{
-			// <- Ё-хо-хо здесь будет подсветка кнопок, когда я сделаю нормальную отрисовку без мерцания
 			gameCanvas.DrawGrid();
+
+			int x = Cursor.Position.X;
+			int y = Cursor.Position.Y;
+			Point p = PointToClient(new Point(x, y));
+
+			gameCanvas.Move(p.X, p.Y);
 			this.Refresh();
 		}
 	}

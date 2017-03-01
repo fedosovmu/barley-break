@@ -42,13 +42,31 @@ namespace barley_break
 			emptyColor = Color.FromArgb(205, 192, 180);
 			fontColor = Color.FromArgb(119, 119, 101);
 
-			downItemColor = Color.FromArgb(221, 204, 186);
-			downYellowColor = Color.FromArgb(221, 201, 165);
+			downItemColor = Color.FromArgb(236, 235, 234);
+			downYellowColor = Color.FromArgb(249, 234, 194);
 
 			len = lenght / game.size;
 			ind = len / 19;
 
 			DrawGrid();
+		}
+
+
+
+		public void Move(int x, int y)
+		{
+			int X = (x - posX) / len;
+			int Y = (y - posY) / len;
+
+			if ((X >= 0 && X < game.size) && (Y >= 0 && Y < game.size) && (x - posX) > 0 && (y - posY) > 0)
+			{
+				if (game[X, Y] == 0)
+					DrawItem(X, Y, emptyColor, false);
+				else if (game[X, Y] == X + Y * game.size + 1)
+					DrawItem(X, Y, downYellowColor);
+				else
+					DrawItem(X, Y, downItemColor);
+			}
 		}
 
 
@@ -80,12 +98,25 @@ namespace barley_break
 
 			for (int i = 0; i < game.size; i++)
 				for (int j = 0; j < game.size; j++)
-					DrawItem(i, j);
+				{
+					int value = game[i, j];
+
+					if (value == 0)
+						DrawItem(i, j, emptyColor, false);
+					else if (value == i + j * game.size + 1)
+					{
+						DrawItem(i, j, yelowItemColor);
+					}
+					else
+					{
+						DrawItem(i, j, itemColor);
+					}
+				}
 		}
 
 
 
-		private void DrawItem(int x, int y)
+		private void DrawItem(int x, int y, Color color, bool showValue = true)
 		{
 			int fontSize = len / 2;
 			Font font = new Font("Arial", fontSize);
@@ -96,18 +127,9 @@ namespace barley_break
 			int value = game[x, y];
 			String st = value.ToString();
 
-			if (value == 0)
-				DrawRoundRec(emptyColor, X, Y, len - ind, len - ind);
-			else if (value == x + y * game.size + 1) // <------------ downItemColor , yelowItemColor, itemColor
-			{
-				DrawRoundRec(yelowItemColor, X, Y, len - ind, len - ind);
-				g.DrawString(st, font, fontBrush, X, Y);
-			}
-			else
-			{
-				DrawRoundRec(itemColor, X, Y, len - ind, len - ind);
-				g.DrawString(st, font, fontBrush, X, Y);
-			}						
+			DrawRoundRec(color, X, Y, len - ind, len - ind);
+			if (showValue)
+				g.DrawString(st, font, fontBrush, X, Y);								
 		}	
 
 
