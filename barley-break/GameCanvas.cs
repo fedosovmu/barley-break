@@ -25,6 +25,8 @@ namespace barley_break
 		Color emptyColor;
 		Color fontColor;
 		Color yelowItemColor;
+		Color downItemColor;
+		Color downYellowColor;
 
 
 
@@ -36,9 +38,12 @@ namespace barley_break
 			formColor = Color.FromArgb(250, 248, 239);
 			gridColor = Color.FromArgb(187, 173, 160);
 			itemColor = Color.FromArgb(238, 228, 218);
+			yelowItemColor = Color.FromArgb(237, 224, 200);
 			emptyColor = Color.FromArgb(205, 192, 180);
 			fontColor = Color.FromArgb(119, 119, 101);
-			yelowItemColor = Color.FromArgb(237, 224, 200);
+
+			downItemColor = Color.FromArgb(221, 204, 186);
+			downYellowColor = Color.FromArgb(221, 201, 165);
 
 			len = lenght / game.size;
 			ind = len / 19;
@@ -50,9 +55,6 @@ namespace barley_break
 
 		public void Click(int x, int y)
 		{
-			Font font = new Font("Arial", 16);
-			SolidBrush brush = new SolidBrush(fontColor);
-
 			int X = (x - posX) / len;
 			int Y = (y - posY) / len;
 
@@ -92,22 +94,20 @@ namespace barley_break
 			int X = posX + x * len + ind;
 			int Y = posY + y * len + ind;
 			int value = game[x, y];
+			String st = value.ToString();
+
 			if (value == 0)
 				DrawRoundRec(emptyColor, X, Y, len - ind, len - ind);
-			else if (value == x + y * game.size + 1)
+			else if (value == x + y * game.size + 1) // <------------ downItemColor , yelowItemColor, itemColor
 			{
 				DrawRoundRec(yelowItemColor, X, Y, len - ind, len - ind);
-				String st = value.ToString();
 				g.DrawString(st, font, fontBrush, X, Y);
 			}
 			else
 			{
 				DrawRoundRec(itemColor, X, Y, len - ind, len - ind);
-				String st = value.ToString();
 				g.DrawString(st, font, fontBrush, X, Y);
-
 			}						
-
 		}	
 
 
