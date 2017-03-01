@@ -48,9 +48,11 @@ namespace barley_break
 
 
 
-		public int GetLocation(int value)
+		public Tuple<int, int> GetLocation(int value)
 		{
-			return positions[value];
+			int x = positions[value] % size;
+			int y = positions[value] / size;
+			return new Tuple<int, int> (x, y);
 		}
 
 
@@ -60,11 +62,11 @@ namespace barley_break
 			if (value < 0 || value >= Math.Pow(size, 2))
 				throw new ArgumentException("Невозможно передвинуть элемент которого нет в game");
 
-			int pos = GetLocation(value);
+			int pos = positions[value];
 			int x = pos % size;
 			int y = pos / size;
 
-			int posZ = GetLocation(0);
+			int posZ = positions[0];
 			int zX = posZ % size;
 			int zY = posZ / size;
 
@@ -84,8 +86,8 @@ namespace barley_break
 		{
 			Form1.ActiveForm.Text = "Shift: " + val.ToString();
 
-			int pos0 = GetLocation(0);
-			int pos1 = GetLocation(val);
+			int pos0 = positions[0];
+			int pos1 = positions[val];
 
 			array[pos0] = val;
 			array[pos1] = 0;
