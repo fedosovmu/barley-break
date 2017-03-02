@@ -63,6 +63,13 @@ namespace barley_break
 
 
 
+        public Game Game
+        {
+            get { return this.game; }
+        }
+
+
+
 		public void Move(int x, int y)
 		{
 			DrawGrid();

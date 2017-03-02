@@ -14,7 +14,7 @@ namespace barley_break
 	{
 		GameCanvas gameCanvas;
 		Bitmap btm;
-		GameButton OpenGameButton;
+		GameButton openGameButton;
 		GameButton saveGameButton;
 		GameButton newGameButton;
 
@@ -39,7 +39,7 @@ namespace barley_break
 			Graphics g = Graphics.FromImage(btm);
 
 			gameCanvas = new GameCanvas(g, game);
-			OpenGameButton = new GameButton(g, 30, 500, "Load");
+			openGameButton = new GameButton(g, 30, 500, "Load");
 			saveGameButton = new GameButton(g, 130, 500, "Save");
 			newGameButton = new GameButton(g, 360, 500, " New");
 
@@ -58,14 +58,13 @@ namespace barley_break
 
 			gameCanvas.Click(p.X, p.Y);
 
-			if (OpenGameButton.Click(p.X, p.Y))
+			if (openGameButton.Click(p.X, p.Y))
 				this.LoadGame();
 
 			if (saveGameButton.Click(p.X, p.Y))
 				this.SaveGame();
 
-			if (newGameButton.Click(p.X, p.Y))
-				this.NewGame();
+            newGameButton.Click(p.X, p.Y);
 
 			this.Refresh();
 		}
@@ -79,7 +78,7 @@ namespace barley_break
 			Point p = PointToClient(new Point(x, y));
 
 			gameCanvas.Move(p.X, p.Y);
-			OpenGameButton.Move(p.X, p.Y);
+			openGameButton.Move(p.X, p.Y);
 			saveGameButton.Move(p.X, p.Y);
 			newGameButton.Move(p.X, p.Y);
 
@@ -91,33 +90,33 @@ namespace barley_break
 		private void LoadGame()
 		{
 			OpenFileDialog dialog = new OpenFileDialog();
+
 			dialog.ShowDialog();
 
 			if (dialog.FileName != "")
 			{
 				Game game = csvHandler.Load(dialog.FileName);
 				gameCanvas.OpenGame(game);
+			}			
 
-			}
-				
-
-			OpenGameButton.ReDraw();
+			openGameButton.ReDraw();
 		}
 
 
 
 		private void SaveGame()
 		{
-			// < ---
 			SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "csv files (*.csv)|*.csv";
 			dialog.ShowDialog();
-		}
 
+            if (dialog.FileName != "")
+            {
+                Game game = gameCanvas.Game;
+                csvHandler.Save(game, dialog.FileName);
+            }
 
-
-		private void NewGame()
-		{
-			// < ---
+            saveGameButton.ReDraw();
 		}
 	}
 }

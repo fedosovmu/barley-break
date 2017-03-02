@@ -28,8 +28,19 @@ namespace barley_break
 
 		public static void Save(Game game, String path)
 		{
-			// < -- Допилить
-		}
+            String[] lines = new String[game.size];
 
+            for (int i = 0; i < game.size; i++)
+            {
+                int[] values = new int[game.size];
+                for (int j = 0; j < game.size; j++)
+                    values[j] = game[j, i];
+
+                lines[i] = String.Join(",", values);
+            }
+
+            String text = String.Join("\n", lines);
+            System.IO.File.WriteAllText(path, text);
+		}
 	}
 }
