@@ -13,7 +13,7 @@ namespace barley_break
 		public readonly int X;
 		public readonly int Y;
 		public readonly string Text;
-		public readonly int Width = 150;
+		public readonly int Width = 90;
 		public readonly int Height = 50;
 
 		Graphics g;

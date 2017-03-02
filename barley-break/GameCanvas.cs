@@ -33,7 +33,6 @@ namespace barley_break
 		public GameCanvas(Graphics g, Game game)
 		{
 			this.g = g;
-			this.game = game;
 
 			formColor = Color.FromArgb(250, 248, 239);
 			gridColor = Color.FromArgb(187, 173, 160);
@@ -45,17 +44,16 @@ namespace barley_break
 			downItemColor = Color.FromArgb(236, 235, 234);
 			downYellowColor = Color.FromArgb(249, 234, 194);
 
-			len = lenght / game.size;
-			ind = len / 19;
+			OpenGame(game);
 
 			DrawGrid();
 		}
 
 
 
-		public void LoadGame(String path)
+		public void OpenGame(Game game)
 		{
-			this.game = new Game(csvReader.Load(path));
+			this.game = game;
 
 			len = lenght / game.size;
 			ind = len / 19;

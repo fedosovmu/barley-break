@@ -8,9 +8,9 @@ using System.Text.RegularExpressions;
 
 namespace barley_break
 {
-	static class csvReader
+	static class csvHandler
 	{
-		public static int[] Load(String path)
+		public static Game Load(String path)
 		{
 			String text = System.IO.File.ReadAllText(path);
 
@@ -21,7 +21,15 @@ namespace barley_break
 			for (int i = 0; i < values.Length; i++)
 				values[i] = Convert.ToInt32( cells[i] );
 	
-			return values;
+			return new Game(values);
 		}
+
+
+
+		public static void Save(Game game, String path)
+		{
+			// < -- Допилить
+		}
+
 	}
 }
