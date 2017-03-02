@@ -55,6 +55,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Game.cs" />
+    <Compile Include="Game2.cs" />
     <Compile Include="GameButton.cs" />
     <Compile Include="GameCanvas.cs" />
     <Compile Include="Program.cs" />

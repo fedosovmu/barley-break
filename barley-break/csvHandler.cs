@@ -14,7 +14,7 @@ namespace barley_break
 		{
 			String text = System.IO.File.ReadAllText(path);
 
-			String[] cells = Regex.Split(text, "[,{\n}]");
+			String[] cells = Regex.Split(text, "[,\n]");
 
 			int[] values = new int[cells.Length];
 

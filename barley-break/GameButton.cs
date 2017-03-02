@@ -13,8 +13,8 @@ namespace barley_break
 		public readonly int X;
 		public readonly int Y;
 		public readonly string Text;
-		public readonly int Width = 90;
-		public readonly int Height = 50;
+		public readonly int Width;
+		public readonly int Height;
 
 		Graphics g;
 		Color buttonColor;
@@ -22,8 +22,11 @@ namespace barley_break
 		Color downButtonColor;
 
 
-		public GameButton(Graphics g ,int X, int Y, String Text)
+		public GameButton(Graphics g ,int X, int Y, String Text, int Width = 90, int Height = 50)
 		{
+			this.Width = Width;
+			this.Height = Height;
+
 			buttonColor = Color.FromArgb(133, 109, 85);
 			textColor = Color.FromArgb(250, 248, 239);
 			downButtonColor = Color.FromArgb(95, 73, 49);
@@ -38,22 +41,6 @@ namespace barley_break
 
 
 
-		public bool Click(int x, int y)
-		{
-			if (IsMouseHover(x, y))
-			{
-				ReDraw(downButtonColor);
-				return true;
-			}
-			else
-			{
-				ReDraw(buttonColor);
-				return false;
-			}
-		}
-
-
-
 		public void Move(int x, int y)
 		{
 			if (IsMouseHover(x, y))
@@ -64,7 +51,7 @@ namespace barley_break
 
 
 
-		private bool IsMouseHover(int x, int y)
+		public bool IsMouseHover(int x, int y)
 		{
 			return (x >= X && x <= X + Width && y >= Y && y <= Y + Height);
 		}
@@ -80,12 +67,13 @@ namespace barley_break
 
 		private void ReDraw(Color color)
 		{
-			GameCanvas.DrawRoundRec(g, color, X, Y, Width, Height, 10);
+			GameCanvas.DrawRoundRec(g, color, X, Y, Width, Height);
 
 			SolidBrush fontBrush = new SolidBrush(textColor);
 			Font font = new Font("Arial", 16);
 
-			g.DrawString(Text, font, fontBrush, X + 15, Y + 15);
+			int indent = Width / 6;
+			g.DrawString(Text, font, fontBrush, X + indent, Y + indent);
 		}
 
 	}

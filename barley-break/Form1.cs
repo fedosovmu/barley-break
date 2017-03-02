@@ -16,7 +16,6 @@ namespace barley_break
 		Bitmap btm;
 		GameButton openGameButton;
 		GameButton saveGameButton;
-		GameButton newGameButton;
 
 
 
@@ -33,7 +32,7 @@ namespace barley_break
 			int[] b = { 7, 6, 5, 8, 2, 1, 0, 3, 4 };
 			int[] c = { 6, 14, 0, 11, 13, 10, 1, 2, 9, 8, 7, 15, 5, 4, 3, 12 };
 
-			Game game = new Game(c);
+			Game game = new Game(b);
 
 			btm = new Bitmap(this.Size.Width, this.Size.Height);
 			Graphics g = Graphics.FromImage(btm);
@@ -41,7 +40,6 @@ namespace barley_break
 			gameCanvas = new GameCanvas(g, game);
 			openGameButton = new GameButton(g, 30, 500, "Load");
 			saveGameButton = new GameButton(g, 130, 500, "Save");
-			newGameButton = new GameButton(g, 360, 500, " New");
 
 			this.DoubleBuffered = true;
 			this.BackgroundImage = btm;
@@ -58,13 +56,11 @@ namespace barley_break
 
 			gameCanvas.Click(p.X, p.Y);
 
-			if (openGameButton.Click(p.X, p.Y))
+			if (openGameButton.IsMouseHover(p.X, p.Y))
 				this.LoadGame();
 
-			if (saveGameButton.Click(p.X, p.Y))
+			if (saveGameButton.IsMouseHover(p.X, p.Y))
 				this.SaveGame();
-
-            newGameButton.Click(p.X, p.Y);
 
 			this.Refresh();
 		}
@@ -80,7 +76,6 @@ namespace barley_break
 			gameCanvas.Move(p.X, p.Y);
 			openGameButton.Move(p.X, p.Y);
 			saveGameButton.Move(p.X, p.Y);
-			newGameButton.Move(p.X, p.Y);
 
 			this.Refresh();
 		}

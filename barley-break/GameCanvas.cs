@@ -28,6 +28,10 @@ namespace barley_break
 		Color downItemColor;
 		Color downYellowColor;
 
+		GameButton newGameButton;
+		GameButton plusButton;
+		GameButton minusButton;
+
 
 
 		public GameCanvas(Graphics g, Game game)
@@ -46,7 +50,14 @@ namespace barley_break
 
 			OpenGame(game);
 
+			SolidBrush formBrush = new SolidBrush(formColor);
+			g.FillRectangle(formBrush, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
+
 			DrawGrid();
+
+			newGameButton = new GameButton(g, 360, 500, " New");
+			plusButton = new GameButton(g, 310, 500, "+", 30);
+			minusButton = new GameButton(g, 240, 500, "~", 30);
 		}
 
 
@@ -79,12 +90,22 @@ namespace barley_break
 			if ((X >= 0 && X < game.size) && (Y >= 0 && Y < game.size) && (x - posX) > 0 && (y - posY) > 0)
 			{
 				if (game[X, Y] == 0)
+				{
 					DrawItem(X, Y, emptyColor, false);
+				}
 				else if (game[X, Y] == X + Y * game.size + 1)
+				{
 					DrawItem(X, Y, downYellowColor);
+				}
 				else
+				{
 					DrawItem(X, Y, downItemColor);
+				}
 			}
+
+			newGameButton.Move(x, y);
+			plusButton.Move(x, y);
+			minusButton.Move(x, y);
 		}
 
 
@@ -99,19 +120,12 @@ namespace barley_break
 				game.Shift(game[X, Y]);
 				DrawGrid();
 			}
-			else
-			{
-				DrawGrid();
-			}
 		}
 
 
 
 		public void DrawGrid()
 		{
-			SolidBrush formBrush = new SolidBrush(formColor);
-			g.FillRectangle(formBrush, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
-
 			DrawRoundRec(g, gridColor, posX, posY, lenght + ind, lenght + ind, 10);
 
 			for (int i = 0; i < game.size; i++)
@@ -156,7 +170,7 @@ namespace barley_break
 		{
 			SolidBrush brush = new SolidBrush(color);
 			if (round == 0)
-				round = width / 5;
+				round = height / 5;
 
 			g.FillEllipse(brush, x, y, round, round);
 			g.FillEllipse(brush, x + width - round, y, round, round);
