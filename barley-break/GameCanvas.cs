@@ -10,8 +10,17 @@ namespace barley_break
 {
 	class GameCanvas
 	{
-		int posX = 30;
-		int posY = 30;
+		static public readonly Color formColor;
+		static public readonly Color gridColor;
+		static public readonly Color itemColor;
+		static public readonly Color emptyColor;
+		static public readonly Color fontColor;
+		static public readonly Color yelowItemColor;
+		static public readonly Color downItemColor;
+		static public readonly Color downYellowColor;
+
+		public readonly int posX = 30;
+		public readonly int posY = 30;
 		int lenght = 420;
 		int len;
 		int ind;
@@ -19,25 +28,12 @@ namespace barley_break
 		Graphics g;
 		Game game;
 
-		Color formColor;
-		Color gridColor;
-		Color itemColor;
-		Color emptyColor;
-		Color fontColor;
-		Color yelowItemColor;
-		Color downItemColor;
-		Color downYellowColor;
-
-		GameButton newGameButton;
-		GameButton plusButton;
-		GameButton minusButton;
+		GameSizePlusMinus gameSizePlusMinus;
 
 
 
-		public GameCanvas(Graphics g, Game game)
+		static GameCanvas()
 		{
-			this.g = g;
-
 			formColor = Color.FromArgb(250, 248, 239);
 			gridColor = Color.FromArgb(187, 173, 160);
 			itemColor = Color.FromArgb(238, 228, 218);
@@ -47,17 +43,20 @@ namespace barley_break
 
 			downItemColor = Color.FromArgb(236, 235, 234);
 			downYellowColor = Color.FromArgb(249, 234, 194);
+		}
 
-			OpenGame(game);
+
+
+
+		public GameCanvas(Graphics g, Game game)
+		{
+			this.g = g;
+
 
 			SolidBrush formBrush = new SolidBrush(formColor);
 			g.FillRectangle(formBrush, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
 
-			DrawGrid();
-
-			newGameButton = new GameButton(g, 360, 500, " New");
-			plusButton = new GameButton(g, 310, 500, "+", 30);
-			minusButton = new GameButton(g, 240, 500, "~", 30);
+			OpenGame(game);
 		}
 
 
@@ -68,6 +67,8 @@ namespace barley_break
 
 			len = lenght / game.size;
 			ind = len / 19;
+
+			gameSizePlusMinus = new GameSizePlusMinus(g, 240, 500, game.size);
 
 			DrawGrid();
 		}
@@ -84,6 +85,7 @@ namespace barley_break
 		public void Move(int x, int y)
 		{
 			DrawGrid();
+
 			int X = (x - posX) / len;
 			int Y = (y - posY) / len;
 
@@ -102,10 +104,7 @@ namespace barley_break
 					DrawItem(X, Y, downItemColor);
 				}
 			}
-
-			newGameButton.Move(x, y);
-			plusButton.Move(x, y);
-			minusButton.Move(x, y);
+			else gameSizePlusMinus.Move(x, y);
 		}
 
 
@@ -120,6 +119,7 @@ namespace barley_break
 				game.Shift(game[X, Y]);
 				DrawGrid();
 			}
+			else gameSizePlusMinus.Click(x, y);
 		}
 
 

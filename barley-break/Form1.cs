@@ -93,8 +93,6 @@ namespace barley_break
 				Game game = csvHandler.Load(dialog.FileName);
 				gameCanvas.OpenGame(game);
 			}			
-
-			openGameButton.ReDraw();
 		}
 
 
@@ -110,8 +108,6 @@ namespace barley_break
                 Game game = gameCanvas.Game;
                 csvHandler.Save(game, dialog.FileName);
             }
-
-            saveGameButton.ReDraw();
 		}
 	}
 }
