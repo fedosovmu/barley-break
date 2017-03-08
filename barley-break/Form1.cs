@@ -16,7 +16,8 @@ namespace barley_break
 		Bitmap btm;
 		GameButton openGameButton;
 		GameButton saveGameButton;
-
+		GameButton newGameButton;
+		GameSizePlusMinus gameSizePlusMinus;
 
 
 		public Form1()
@@ -32,7 +33,7 @@ namespace barley_break
 			int[] b = { 7, 6, 5, 8, 2, 1, 0, 3, 4 };
 			int[] c = { 6, 14, 0, 11, 13, 10, 1, 2, 9, 8, 7, 15, 5, 4, 3, 12 };
 
-			Game game = new Game(b);
+			Game2 game = new Game2(b);
 
 			btm = new Bitmap(this.Size.Width, this.Size.Height);
 			Graphics g = Graphics.FromImage(btm);
@@ -40,6 +41,8 @@ namespace barley_break
 			gameCanvas = new GameCanvas(g, game);
 			openGameButton = new GameButton(g, 30, 500, "Load");
 			saveGameButton = new GameButton(g, 130, 500, "Save");
+			newGameButton = new GameButton(g, 360, 500, " New", 95);
+			gameSizePlusMinus = new GameSizePlusMinus(g, 240, 500, game.size);
 
 			this.DoubleBuffered = true;
 			this.BackgroundImage = btm;
@@ -62,6 +65,11 @@ namespace barley_break
 			if (saveGameButton.IsMouseHover(p.X, p.Y))
 				this.SaveGame();
 
+			if (newGameButton.IsMouseHover(p.X, p.Y))
+				this.NewGame();
+
+			gameSizePlusMinus.Click(p.X, p.Y);
+
 			this.Refresh();
 		}
 
@@ -76,6 +84,8 @@ namespace barley_break
 			gameCanvas.Move(p.X, p.Y);
 			openGameButton.Move(p.X, p.Y);
 			saveGameButton.Move(p.X, p.Y);
+			newGameButton.Move(p.X, p.Y);
+			gameSizePlusMinus.Move(p.X, p.Y);
 
 			this.Refresh();
 		}
@@ -90,7 +100,7 @@ namespace barley_break
 
 			if (dialog.FileName != "")
 			{
-				Game game = csvHandler.Load(dialog.FileName);
+				Game2 game = csvHandler.Load(dialog.FileName);
 				gameCanvas.OpenGame(game);
 			}			
 		}
@@ -105,9 +115,26 @@ namespace barley_break
 
             if (dialog.FileName != "")
             {
-                Game game = gameCanvas.Game;
+                Game2 game = gameCanvas.Game;
                 csvHandler.Save(game, dialog.FileName);
             }
+		}
+
+
+
+		private void NewGame()
+		{
+			int size = gameSizePlusMinus.Value;
+			int size2 = (int)Math.Pow(size, 2);
+			int[] values = new int[size2];
+			for (int i = 0; i < size2; i++)
+				values[i] = i + 1;
+			values[size2 - 1] = 0;
+			Game2 game = new Game2(values);
+
+			game.ReMix();
+
+			gameCanvas.OpenGame(game);
 		}
 	}
 }

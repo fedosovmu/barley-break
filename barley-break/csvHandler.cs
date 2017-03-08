@@ -10,7 +10,7 @@ namespace barley_break
 {
 	static class csvHandler
 	{
-		public static Game Load(String path)
+		public static Game2 Load(String path)
 		{
 			String text = System.IO.File.ReadAllText(path);
 
@@ -21,12 +21,12 @@ namespace barley_break
 			for (int i = 0; i < values.Length; i++)
 				values[i] = Convert.ToInt32( cells[i] );
 	
-			return new Game(values);
+			return new Game2(values);
 		}
 
 
 
-		public static void Save(Game game, String path)
+		public static void Save(Game2 game, String path)
 		{
             String[] lines = new String[game.size];
 

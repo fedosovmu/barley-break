@@ -44,6 +44,11 @@ namespace barley_break
 		public int this[int x, int y]
 		{
 			get { return values[x + size * y]; }
+			set
+			{
+				values[x + size * y] = value;
+				positions[value] = x + size * y;
+			}
 		}
 
 
@@ -70,8 +75,8 @@ namespace barley_break
 			int zX = posZ % size;
 			int zY = posZ / size;
 
-			if ((zX == x && (zY + 1 == y || zY - 1 == y))
-			|| (zY == y && (zX + 1 == x || zX - 1 == x)))
+			if ((Math.Abs(zX - x) == 1 && zY == y)
+				|| (zX == x && (Math.Abs(zY - y) == 1)))
 				Swap(value);
 		}
 

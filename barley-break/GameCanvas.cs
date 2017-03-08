@@ -26,9 +26,7 @@ namespace barley_break
 		int ind;
 
 		Graphics g;
-		Game game;
-
-		GameSizePlusMinus gameSizePlusMinus;
+		Game2 game;
 
 
 
@@ -48,10 +46,9 @@ namespace barley_break
 
 
 
-		public GameCanvas(Graphics g, Game game)
+		public GameCanvas(Graphics g, Game2 game)
 		{
 			this.g = g;
-
 
 			SolidBrush formBrush = new SolidBrush(formColor);
 			g.FillRectangle(formBrush, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
@@ -61,21 +58,20 @@ namespace barley_break
 
 
 
-		public void OpenGame(Game game)
+		public void OpenGame(Game2 game)
 		{
 			this.game = game;
 
 			len = lenght / game.size;
 			ind = len / 19;
 
-			gameSizePlusMinus = new GameSizePlusMinus(g, 240, 500, game.size);
-
+			DrawRoundRec(g, formColor, posX, posY, 450, 450, 10);
 			DrawGrid();
 		}
 
 
 
-        public Game Game
+        public Game2 Game
         {
             get { return this.game; }
         }
@@ -104,7 +100,6 @@ namespace barley_break
 					DrawItem(X, Y, downItemColor);
 				}
 			}
-			else gameSizePlusMinus.Move(x, y);
 		}
 
 
@@ -118,15 +113,24 @@ namespace barley_break
 			{
 				game.Shift(game[X, Y]);
 				DrawGrid();
+				if (game.isSuccess)
+					StartWinAnimation();
 			}
-			else gameSizePlusMinus.Click(x, y);
+		}
+
+
+
+		private void StartWinAnimation()
+		{
+			// <------------------
+			Form1.ActiveForm.Text = "You Win";
 		}
 
 
 
 		public void DrawGrid()
 		{
-			DrawRoundRec(g, gridColor, posX, posY, lenght + ind, lenght + ind, 10);
+			DrawRoundRec(g, gridColor, posX, posY, len * game.size + ind, len * game.size + ind, 10);
 
 			for (int i = 0; i < game.size; i++)
 				for (int j = 0; j < game.size; j++)
