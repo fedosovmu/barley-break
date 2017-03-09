@@ -41,6 +41,8 @@ namespace barley_break
 			get { return values[x + size * y]; }
 			set
 			{
+				if (value < 0 || value > Math.Pow(size, 2))
+					throw new ArgumentException("Ошибка при изменении значения в Game");
 				values[x + size * y] = value;
 				positions[value] = x + size * y;
 			}

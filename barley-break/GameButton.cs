@@ -16,9 +16,11 @@ namespace barley_break
 
 		public readonly int X;
 		public readonly int Y;
-		public readonly string Text;
+		public readonly String Text;
 		public readonly int Width;
 		public readonly int Height;
+		int indW;
+		int indH;
 
 		bool isMouseHover = false;
 
@@ -35,7 +37,7 @@ namespace barley_break
 
 
 
-		public GameButton(Graphics g ,int X, int Y, String Text, int Width = 90, int Height = 50)
+		public GameButton(Graphics g ,int X, int Y, String Text, int Width = 90, int Height = 50, int indW = 0)
 		{
 			this.Width = Width;
 			this.Height = Height;
@@ -44,6 +46,12 @@ namespace barley_break
 			this.X = X;
 			this.Y = Y;
 			this.Text = Text;
+
+			if (indW != 0)
+				this.indW = indW;
+			else
+				this.indW = Width / 6;
+			this.indH = Height / 4;
 
 			ReDraw(buttonColor);
 		}
@@ -93,8 +101,6 @@ namespace barley_break
 			SolidBrush fontBrush = new SolidBrush(textColor);
 			Font font = new Font("Arial", 16, FontStyle.Bold);
 
-			int indW = Width / 6;
-			int indH = Height / 4;
 			g.DrawString(Text, font, fontBrush, X + indW, Y + indH);
 		}
 

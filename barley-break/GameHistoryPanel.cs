@@ -26,10 +26,10 @@ namespace barley_break
 			this.Y = Y;
 			this.g = g;
 
-			GameCanvas.DrawRoundRec(g, GameCanvas.gridColor, X, Y, 200, 520, 20);
+			GameCanvas.DrawRoundRec(g, GameCanvas.gridColor, X, Y, 100, 520, 20);
 
-			BackButton = new GameButton(g, X, Y, "Back");
-			BackFiveButton = new GameButton(g, X + 100, Y, "Back 5", 100, 50);
+			BackButton = new GameButton(g, X + 5, Y + 5, "Back");
+			BackFiveButton = new GameButton(g, X + 5, Y + 60, "Back 5", 90, 50, 7);
 
 			OpenGame(game);
 		}
@@ -46,19 +46,20 @@ namespace barley_break
 
 		public void ShowHistory()
 		{
-			GameCanvas.DrawRoundRec(g, GameCanvas.emptyColor, X + 5, Y + 55, 190, 460, 20);
+			GameCanvas.DrawRoundRec(g, GameCanvas.emptyColor, X + 5, Y + 115, 90, 400, 20);
 
 			Font font = new Font("Verdana", 14);
 			SolidBrush fontBrush = new SolidBrush(GameCanvas.formColor);
 
-			int start = 0;
-			if (game.history.Count > 15)
-				start = game.history.Count - 15;
+			int size = 13;
+			if (game.history.Count < 13)
+				size = game.history.Count;
 
-			for (int i = start; i < game.history.Count; i++)
+			for (int i = 0; i < size; i++)
 			{
-				String st = Convert.ToString(game.history.ElementAt(i)); 
-				g.DrawString(st, font, fontBrush, X + 20, Y + 65 + (i - start) * 30);
+				String st = Convert.ToString(game.history.ElementAt(i));
+				st += " -> 0";
+				g.DrawString(st, font, fontBrush, X + 15, Y + 120 + i * 30);
 			}
 		}
 
