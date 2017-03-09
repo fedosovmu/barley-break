@@ -28,6 +28,10 @@ namespace barley_break
 		Graphics g;
 		Game3 game;
 
+		GameSizePlusMinus gameSizePlusMinus;
+		GameHistoryPanel gameHistoryPanel;
+		GameButton newGameButton;
+
 
 
 		static GameCanvas()
@@ -52,6 +56,10 @@ namespace barley_break
 
 			SolidBrush formBrush = new SolidBrush(formColor);
 			g.FillRectangle(formBrush, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
+
+			gameSizePlusMinus = new GameSizePlusMinus(g, 240, 500, game.size);
+			gameHistoryPanel = new GameHistoryPanel(g, game, 470, 30);
+			newGameButton = new GameButton(g, 360, 500, " New", 95);
 
 			OpenGame(game);
 		}
@@ -100,6 +108,10 @@ namespace barley_break
 					DrawItem(X, Y, downItemColor);
 				}
 			}
+
+			gameSizePlusMinus.Move(x, y);
+			gameHistoryPanel.Move(x, y);
+			newGameButton.Move(x, y);
 		}
 
 
@@ -116,13 +128,35 @@ namespace barley_break
 				if (game.isSuccess)
 					StartWinAnimation();
 			}
+
+			gameSizePlusMinus.Click(x, y);
+			gameHistoryPanel.Click(x, y);
+			if (newGameButton.IsMouseHover(x, y))
+				this.NewGame();
+		}
+
+
+
+		private void NewGame()
+		{
+			int size = gameSizePlusMinus.Value;
+			int size2 = (int)Math.Pow(size, 2);
+			int[] values = new int[size2];
+			for (int i = 0; i < size2; i++)
+				values[i] = i + 1;
+			values[size2 - 1] = 0;
+			Game3 game = new Game3(values);
+
+			game.ReMix();
+
+			OpenGame(game);
 		}
 
 
 
 		private void StartWinAnimation()
 		{
-			// <------------------
+			// <-------------------------------------------
 			Form1.ActiveForm.Text = "You Win";
 		}
 

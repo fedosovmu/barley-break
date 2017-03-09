@@ -13,6 +13,7 @@ namespace barley_break
 		public readonly int X;
 		public readonly int Y;
 		Graphics g;
+		Game3 game;
 		List<String> history;
 
 		GameButton BackButton;
@@ -20,32 +21,48 @@ namespace barley_break
 
 
 
-		public GameHistoryPanel(Graphics g, int X, int Y)
+		public GameHistoryPanel(Graphics g, Game3 game, int X, int Y)
 		{
 			this.X = X;
 			this.Y = Y;
 			this.g = g;
 
 			GameCanvas.DrawRoundRec(g, GameCanvas.gridColor, X, Y, 200, 520, 20);
-			GameCanvas.DrawRoundRec(g, GameCanvas.emptyColor, X + 5, Y + 55, 190, 460, 20);
 
 			BackButton = new GameButton(g, X, Y, "Back");
 			BackFiveButton = new GameButton(g, X + 100, Y, "Back 5", 100, 50);
+
+			OpenGame(game);
+		}
+
+
+
+		public void OpenGame(Game3 game)
+		{
+			this.game = game;
+			GameCanvas.DrawRoundRec(g, GameCanvas.emptyColor, X + 5, Y + 55, 190, 460, 20);
+			history = new List<String>();
 		}
 
 
 
 		public void Add(String line)
 		{
-			//history.Add(line);
-			Font font = new Font("Verdana", 14);
-			SolidBrush fontBrush = new SolidBrush(Color.White);
+			history.Add(line);
 
-			for (int i = 0; i < 15; i++)
+			GameCanvas.DrawRoundRec(g, GameCanvas.emptyColor, X + 5, Y + 55, 190, 460, 20);
+
+			Font font = new Font("Verdana", 14);
+			SolidBrush fontBrush = new SolidBrush(GameCanvas.formColor);
+
+			int start = 0;
+			if (history.Count > 15)
+				start = history.Count - 15;
+
+			for (int i = start; i < history.Count; i++)
 			{
-				// <----
-				//String st = Convert.ToString(i);
-				g.DrawString(line, font, fontBrush, X + 20, Y + 65 + i * 30);
+				String st = history[i]; 
+				g.DrawString(st, font, fontBrush, X + 20, Y + 65 + (i - start) * 30);
 			}
 		}
 
@@ -54,6 +71,17 @@ namespace barley_break
 		public void Click(int x, int y)
 		{
 			// <-----
+			if (BackButton.IsMouseHover(x, y))
+			{
+				if (history.Count >= 1)
+				history.RemoveAt(history.Count - 1);
+			}
+			else if (BackFiveButton.IsMouseHover(x,y))
+			{
+				if (history.Count >= 5)
+				for (int i = 0; i < 5; i ++)
+					history.RemoveAt(history.Count - 1);
+			}
 		}
 
 
