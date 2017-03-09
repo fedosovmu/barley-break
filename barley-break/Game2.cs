@@ -58,6 +58,5 @@ namespace barley_break
 				return true;
 			}
 		}
-
 	}
 }

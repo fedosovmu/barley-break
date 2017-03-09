@@ -21,14 +21,17 @@ namespace barley_break
 
 		public new void Shift (int value)
 		{
-			history.Push(value);
-			base.Shift(value);
+			if (base.Shift(value))
+				history.Push(value);
 		}
 
 
 
 		public void Back(int count = 1)
 		{
+			if (history.Count < count)
+				count = history.Count;
+
 			for (int i = 0; i < count; i++)
 				base.Shift(history.Pop());
 		}

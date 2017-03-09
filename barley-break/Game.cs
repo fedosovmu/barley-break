@@ -17,11 +17,7 @@ namespace barley_break
 		public Game(params int[] values)
 		{
 			this.values = values;
-			double size = Math.Sqrt(values.Length);
-			if (size == (int)size)
-				this.size = (int)size;		
-			else
-				throw new ArgumentException("Неверное количество элементов при создании Game");
+			this.size = (int) Math.Sqrt(values.Length);
 
 			positions = new int[values.Length];
 
@@ -36,7 +32,6 @@ namespace barley_break
 				else
 					throw new ArgumentException("Неверная инициализация Game");
 			}
-				
 		}
 
 
@@ -62,7 +57,7 @@ namespace barley_break
 
 
 
-		public void Shift(int value)
+		public bool Shift(int value)
 		{
 			if (value < 0 || value >= Math.Pow(size, 2))
 				throw new ArgumentException("Невозможно передвинуть элемент которого нет в game");
@@ -75,9 +70,11 @@ namespace barley_break
 			int zX = posZ % size;
 			int zY = posZ / size;
 
-			if ((Math.Abs(zX - x) == 1 && zY == y)
-				|| (zX == x && (Math.Abs(zY - y) == 1)))
+			bool isNear = (Math.Abs(zX - x) == 1 && zY == y)	|| (zX == x && (Math.Abs(zY - y) == 1));
+			if (isNear)
 				Swap(value);
+
+			return isNear;
 		}
 
 

@@ -69,6 +69,7 @@ namespace barley_break
 		public void OpenGame(Game3 game)
 		{
 			this.game = game;
+			gameHistoryPanel.OpenGame(game);
 
 			len = lenght / game.size;
 			ind = len / 19;
