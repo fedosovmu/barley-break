@@ -18,6 +18,7 @@ namespace barley_break
 		GameButton saveGameButton;
 		GameButton newGameButton;
 		GameSizePlusMinus gameSizePlusMinus;
+		GameHistoryPanel gameHistoryPanel;
 
 
 		public Form1()
@@ -33,7 +34,7 @@ namespace barley_break
 			int[] b = { 7, 6, 5, 8, 2, 1, 0, 3, 4 };
 			int[] c = { 6, 14, 0, 11, 13, 10, 1, 2, 9, 8, 7, 15, 5, 4, 3, 12 };
 
-			Game2 game = new Game2(b);
+			Game3 game = new Game3(b);
 
 			btm = new Bitmap(this.Size.Width, this.Size.Height);
 			Graphics g = Graphics.FromImage(btm);
@@ -43,6 +44,9 @@ namespace barley_break
 			saveGameButton = new GameButton(g, 130, 500, "Save");
 			newGameButton = new GameButton(g, 360, 500, " New", 95);
 			gameSizePlusMinus = new GameSizePlusMinus(g, 240, 500, game.size);
+			gameHistoryPanel = new GameHistoryPanel(g, 470, 30);
+
+			gameHistoryPanel.Add("(5, 6) -> (4, 9)");
 
 			this.DoubleBuffered = true;
 			this.BackgroundImage = btm;
@@ -69,6 +73,7 @@ namespace barley_break
 				this.NewGame();
 
 			gameSizePlusMinus.Click(p.X, p.Y);
+			gameHistoryPanel.Click(p.X, p.Y);
 
 			this.Refresh();
 		}
@@ -86,6 +91,7 @@ namespace barley_break
 			saveGameButton.Move(p.X, p.Y);
 			newGameButton.Move(p.X, p.Y);
 			gameSizePlusMinus.Move(p.X, p.Y);
+			gameHistoryPanel.Move(p.X, p.Y);
 
 			this.Refresh();
 		}
@@ -100,7 +106,7 @@ namespace barley_break
 
 			if (dialog.FileName != "")
 			{
-				Game2 game = csvHandler.Load(dialog.FileName);
+				Game3 game = csvHandler.Load(dialog.FileName);
 				gameCanvas.OpenGame(game);
 			}			
 		}
@@ -115,7 +121,7 @@ namespace barley_break
 
             if (dialog.FileName != "")
             {
-                Game2 game = gameCanvas.Game;
+                Game3 game = gameCanvas.Game;
                 csvHandler.Save(game, dialog.FileName);
             }
 		}
@@ -130,7 +136,7 @@ namespace barley_break
 			for (int i = 0; i < size2; i++)
 				values[i] = i + 1;
 			values[size2 - 1] = 0;
-			Game2 game = new Game2(values);
+			Game3 game = new Game3(values);
 
 			game.ReMix();
 

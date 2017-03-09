@@ -56,8 +56,10 @@
     </Compile>
     <Compile Include="Game.cs" />
     <Compile Include="Game2.cs" />
+    <Compile Include="Game3.cs" />
     <Compile Include="GameButton.cs" />
     <Compile Include="GameCanvas.cs" />
+    <Compile Include="GameHistoryPanel.cs" />
     <Compile Include="GameSizePlusMinus.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

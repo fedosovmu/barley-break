@@ -26,7 +26,7 @@ namespace barley_break
 		int ind;
 
 		Graphics g;
-		Game2 game;
+		Game3 game;
 
 
 
@@ -46,7 +46,7 @@ namespace barley_break
 
 
 
-		public GameCanvas(Graphics g, Game2 game)
+		public GameCanvas(Graphics g, Game3 game)
 		{
 			this.g = g;
 
@@ -58,20 +58,20 @@ namespace barley_break
 
 
 
-		public void OpenGame(Game2 game)
+		public void OpenGame(Game3 game)
 		{
 			this.game = game;
 
 			len = lenght / game.size;
 			ind = len / 19;
 
-			DrawRoundRec(g, formColor, posX, posY, 450, 450, 10);
+			DrawRoundRec(g, formColor, posX, posY, 440, 440, 10);
 			DrawGrid();
 		}
 
 
 
-        public Game2 Game
+        public Game3 Game
         {
             get { return this.game; }
         }
