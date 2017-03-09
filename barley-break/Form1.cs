@@ -14,8 +14,6 @@ namespace barley_break
 	{
 		GameCanvas gameCanvas;
 		Bitmap btm;
-		GameButton openGameButton;
-		GameButton saveGameButton;
 
 
 
@@ -38,8 +36,6 @@ namespace barley_break
 			Graphics g = Graphics.FromImage(btm);
 
 			gameCanvas = new GameCanvas(g, game);
-			openGameButton = new GameButton(g, 30, 500, "Load");
-			saveGameButton = new GameButton(g, 130, 500, "Save");
 
 			this.DoubleBuffered = true;
 			this.BackgroundImage = btm;
@@ -56,10 +52,10 @@ namespace barley_break
 
 			gameCanvas.Click(p.X, p.Y);
 
-			if (openGameButton.IsMouseHover(p.X, p.Y))
+			if (gameCanvas.openGameButton.IsMouseHover(p.X, p.Y))
 				this.LoadGame();
 
-			if (saveGameButton.IsMouseHover(p.X, p.Y))
+			if (gameCanvas.saveGameButton.IsMouseHover(p.X, p.Y))
 				this.SaveGame();
 
 			this.Refresh();
@@ -74,8 +70,6 @@ namespace barley_break
 			Point p = PointToClient(new Point(x, y));
 
 			gameCanvas.Move(p.X, p.Y);
-			openGameButton.Move(p.X, p.Y);
-			saveGameButton.Move(p.X, p.Y);
 
 			this.Refresh();
 		}

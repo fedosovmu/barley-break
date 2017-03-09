@@ -25,12 +25,17 @@ namespace barley_break
 		int len;
 		int ind;
 
+		bool isSuccess = false;
+
 		Graphics g;
 		Game3 game;
 
-		GameSizePlusMinus gameSizePlusMinus;
-		GameHistoryPanel gameHistoryPanel;
-		GameButton newGameButton;
+		public readonly GameSizePlusMinus gameSizePlusMinus;
+		public readonly GameHistoryPanel gameHistoryPanel;
+
+		public readonly GameButton openGameButton;
+		public readonly GameButton saveGameButton;
+		public readonly GameButton newGameButton;
 
 
 
@@ -59,7 +64,10 @@ namespace barley_break
 
 			gameSizePlusMinus = new GameSizePlusMinus(g, 240, 500, game.size);
 			gameHistoryPanel = new GameHistoryPanel(g, game, 470, 30);
+
 			newGameButton = new GameButton(g, 360, 500, " New", 95);
+			openGameButton = new GameButton(g, 30, 500, "Load");
+			saveGameButton = new GameButton(g, 130, 500, "Save");
 
 			OpenGame(game);
 		}
@@ -76,6 +84,11 @@ namespace barley_break
 
 			DrawRoundRec(g, formColor, posX, posY, 440, 440, 10);
 			DrawGrid();
+
+			if (game.isSuccess)
+				StartWinAnimation();
+			else
+				isSuccess = false;
 		}
 
 
@@ -89,30 +102,35 @@ namespace barley_break
 
 		public void Move(int x, int y)
 		{
-			DrawGrid();
-
-			int X = (x - posX) / len;
-			int Y = (y - posY) / len;
-
-			if ((X >= 0 && X < game.size) && (Y >= 0 && Y < game.size) && (x - posX) > 0 && (y - posY) > 0)
-			{
-				if (game[X, Y] == 0)
-				{
-					DrawItem(X, Y, emptyColor, false);
-				}
-				else if (game[X, Y] == X + Y * game.size + 1)
-				{
-					DrawItem(X, Y, downYellowColor);
-				}
-				else
-				{
-					DrawItem(X, Y, downItemColor);
-				}
-			}
-
 			gameSizePlusMinus.Move(x, y);
 			gameHistoryPanel.Move(x, y);
 			newGameButton.Move(x, y);
+			openGameButton.Move(x, y);
+			saveGameButton.Move(x, y);
+
+			if (isSuccess == false)
+			{
+				DrawGrid();
+
+				int X = (x - posX) / len;
+				int Y = (y - posY) / len;
+
+				if ((X >= 0 && X < game.size) && (Y >= 0 && Y < game.size) && (x - posX) > 0 && (y - posY) > 0)
+				{
+					if (game[X, Y] == 0)
+					{
+						DrawItem(X, Y, emptyColor, false);
+					}
+					else if (game[X, Y] == X + Y * game.size + 1)
+					{
+						DrawItem(X, Y, downYellowColor);
+					}
+					else
+					{
+						DrawItem(X, Y, downItemColor);
+					}
+				}
+			}
 		}
 
 
@@ -124,16 +142,20 @@ namespace barley_break
 
 			if ((X >= 0 && X < game.size) && (Y >= 0 && Y < game.size) && (x - posX) > 0 && (y - posY) > 0)
 			{
+				if (isSuccess == false)
+				{
 				game.Shift(game[X, Y]);
 				DrawGrid();
 				gameHistoryPanel.ShowHistory();
 				if (game.isSuccess)
 					StartWinAnimation();
+				}
 			}
 
-			gameSizePlusMinus.Click(x, y);
 			gameHistoryPanel.Click(x, y);
-			if (newGameButton.IsMouseHover(x, y))
+			this.isSuccess = game.isSuccess;
+			gameSizePlusMinus.Click(x, y);
+			if (newGameButton.IsMouseHover(x, y))			
 				this.NewGame();
 		}
 
@@ -158,8 +180,17 @@ namespace barley_break
 
 		private void StartWinAnimation()
 		{
-			// <-------------------------------------------
-			Form1.ActiveForm.Text = "You Win";
+			this.isSuccess = true;
+
+			Color winColor = Color.FromArgb(200, Color.Black);
+
+			//DrawRoundRec(g, winColor, posX, posY, len * game.size + ind, len * game.size + ind, 10);
+			g.FillRectangle(new SolidBrush(winColor), posX, posY, len * game.size + ind, len * game.size + ind);
+
+			Font font = new Font("Consolas", 50, FontStyle.Bold);
+			SolidBrush fontBrush = new SolidBrush(Color.White);
+
+			g.DrawString("YOU WIN", font, fontBrush, posX + 75, posY + 170);
 		}
 
 
@@ -211,7 +242,7 @@ namespace barley_break
 			SolidBrush brush = new SolidBrush(color);
 			if (round == 0)
 				round = height / 5;
-
+			
 			g.FillEllipse(brush, x, y, round, round);
 			g.FillEllipse(brush, x + width - round, y, round, round);
 			g.FillEllipse(brush, x, y + height - round, round, round);

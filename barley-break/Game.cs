@@ -8,8 +8,8 @@ namespace barley_break
 {
 	class Game
 	{
-		int[] values;
-		int[] positions;
+		protected int[] values;
+		protected int[] positions;
 		public readonly int size;
 
 
@@ -27,7 +27,7 @@ namespace barley_break
 			for (int i = 0; i < Math.Pow(size, 2); i++)
 			{
 				int val = values[i];
-				if ( val >= 0 && val < Math.Pow(size, 2) && positions[val] == -1)
+				if (val >= 0 && val < Math.Pow(size, 2) && positions[val] == -1)
 					positions[val] = i;
 				else
 					throw new ArgumentException("Неверная инициализация Game");
@@ -69,10 +69,10 @@ namespace barley_break
 			int y = pos / size;
 
 			int posZ = positions[0];
-			int zX = posZ % size;
-			int zY = posZ / size;
+			int X = posZ % size;
+			int Y = posZ / size;
 
-			bool isNear = (Math.Abs(zX - x) == 1 && zY == y)	|| (zX == x && (Math.Abs(zY - y) == 1));
+			bool isNear = (Math.Abs(X - x) == 1 && Y == y) || (X == x && (Math.Abs(Y - y) == 1));
 			if (isNear)
 				Swap(value);
 

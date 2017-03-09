@@ -51,10 +51,9 @@ namespace barley_break
 		{
 			get
 			{
-				for (int i = 0; i < size; i++)		
-					for (int j = 0; j < size; j++)
-						if (this[i, j] != (i + j * size + 1) % (size * size))
-							return false;
+				for (int i = 0; i < values.Length; i++)						
+					if (values[i] != (i + 1) % values.Length)
+						return false;
 				return true;
 			}
 		}
