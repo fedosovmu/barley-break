@@ -27,7 +27,7 @@ namespace barley_break
 			this.Value = Value;
 
 			SolidBrush brush = new SolidBrush(GameCanvas.gridColor);
-			g.FillRectangle(brush, X + 20, Y, 80, 50);
+			g.FillRectangle(brush, X + 25, Y, 55, 50);
 
 			DrawValue();
 

@@ -48,7 +48,7 @@ namespace barley_break
 		{
 			GameCanvas.DrawRoundRec(g, GameCanvas.emptyColor, X + 5, Y + 115, 90, 400, 20);
 
-			Font font = new Font("Verdana", 14);
+			Font font = new Font("Consolas", 15, FontStyle.Bold);
 			SolidBrush fontBrush = new SolidBrush(GameCanvas.formColor);
 
 			int size = 13;
@@ -57,9 +57,10 @@ namespace barley_break
 
 			for (int i = 0; i < size; i++)
 			{
-				String st = Convert.ToString(game.history.ElementAt(i));
-				st += " -> 0";
-				g.DrawString(st, font, fontBrush, X + 15, Y + 120 + i * 30);
+				int val = game.history.ElementAt(i);
+				String st = String.Format("{0,2}", val) + " -> 0";	
+
+				g.DrawString(st, font, fontBrush, X + 5, Y + 120 + i * 30);
 			}
 		}
 

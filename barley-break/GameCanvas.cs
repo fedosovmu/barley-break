@@ -184,8 +184,8 @@ namespace barley_break
 
 			Color winColor = Color.FromArgb(200, Color.Black);
 
-			//DrawRoundRec(g, winColor, posX, posY, len * game.size + ind, len * game.size + ind, 10);
-			g.FillRectangle(new SolidBrush(winColor), posX, posY, len * game.size + ind, len * game.size + ind);
+			//g.FillRectangle(new SolidBrush(winColor), posX, posY, len * game.size + ind, len * game.size + ind);
+			DrawRoundRec(g, winColor, posX, posY, len * game.size + ind, len * game.size + ind, 10);
 
 			Font font = new Font("Consolas", 50, FontStyle.Bold);
 			SolidBrush fontBrush = new SolidBrush(Color.White);
@@ -242,13 +242,16 @@ namespace barley_break
 			SolidBrush brush = new SolidBrush(color);
 			if (round == 0)
 				round = height / 5;
-			
-			g.FillEllipse(brush, x, y, round, round);
-			g.FillEllipse(brush, x + width - round, y, round, round);
-			g.FillEllipse(brush, x, y + height - round, round, round);
-			g.FillEllipse(brush, x + width - round, y + height - round, round, round);
-			int hround = round / 2;
-			g.FillRectangle(brush, x, y + hround, width, height - round);
+
+			g.FillPie(brush, new Rectangle(x, y, round, round), 180, 90);
+			g.FillPie(brush, new Rectangle(x + width - round, y, round, round), 270, 90);
+			g.FillPie(brush, new Rectangle(x + width - round, y + height - round, round, round), 0, 90);
+			g.FillPie(brush, new Rectangle(x, y + height - round, round, round), 90, 90);
+
+			int hround = (round + 1) / 2;
+
+			g.FillRectangle(brush, x, y + hround, hround, height - round);
+			g.FillRectangle(brush, x + width - hround, y + hround, hround, height - round);
 			g.FillRectangle(brush, x + hround, y, width - round, height);
 		}
 	}
