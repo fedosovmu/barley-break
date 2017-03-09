@@ -14,7 +14,6 @@ namespace barley_break
 		public readonly int Y;
 		Graphics g;
 		Game3 game;
-		List<String> history;
 
 		GameButton BackButton;
 		GameButton BackFiveButton;
@@ -40,28 +39,25 @@ namespace barley_break
 		public void OpenGame(Game3 game)
 		{
 			this.game = game;
-			GameCanvas.DrawRoundRec(g, GameCanvas.emptyColor, X + 5, Y + 55, 190, 460, 20);
-			history = new List<String>();
+			ShowHistory();
 		}
 
 
 
-		public void Add(String line)
+		public void ShowHistory()
 		{
-			history.Add(line);
-
 			GameCanvas.DrawRoundRec(g, GameCanvas.emptyColor, X + 5, Y + 55, 190, 460, 20);
 
 			Font font = new Font("Verdana", 14);
 			SolidBrush fontBrush = new SolidBrush(GameCanvas.formColor);
 
 			int start = 0;
-			if (history.Count > 15)
-				start = history.Count - 15;
+			if (game.history.Count > 15)
+				start = game.history.Count - 15;
 
-			for (int i = start; i < history.Count; i++)
+			for (int i = start; i < game.history.Count; i++)
 			{
-				String st = history[i]; 
+				String st = Convert.ToString(game.history.ElementAt(i)); 
 				g.DrawString(st, font, fontBrush, X + 20, Y + 65 + (i - start) * 30);
 			}
 		}
@@ -70,17 +66,15 @@ namespace barley_break
 
 		public void Click(int x, int y)
 		{
-			// <-----
 			if (BackButton.IsMouseHover(x, y))
 			{
-				if (history.Count >= 1)
-				history.RemoveAt(history.Count - 1);
+				game.Back();
+				ShowHistory();
 			}
 			else if (BackFiveButton.IsMouseHover(x,y))
 			{
-				if (history.Count >= 5)
-				for (int i = 0; i < 5; i ++)
-					history.RemoveAt(history.Count - 1);
+				game.Back(5);
+				ShowHistory();
 			}
 		}
 

@@ -125,6 +125,7 @@ namespace barley_break
 			{
 				game.Shift(game[X, Y]);
 				DrawGrid();
+				gameHistoryPanel.ShowHistory();
 				if (game.isSuccess)
 					StartWinAnimation();
 			}
