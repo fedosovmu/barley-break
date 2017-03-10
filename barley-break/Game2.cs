@@ -17,32 +17,26 @@ namespace barley_break
 		{
 			Random rand = new Random();
 
-			for (int i = 0; i < Math.Pow(size, 2); i++)
+            int count = rand.Next((int) Math.Pow(size, 2), (int) Math.Pow(size, 2) + 5);
+
+			for (int i = 0; i < count; i++)
 			{
 				int x = rand.Next(0, size - 1);
 				int y = rand.Next(0, size - 1);
-				int count = rand.Next(1, 3);
 
-				Rotate(x, y, count);
+				Rotate(x, y);
 			}
 		}
 
 
 
-		private void Rotate(int x, int y, int count = 1)
+		private void Rotate(int x, int y)
 		{ 
-			if (count < 1 || count > 3) // count = [1 .. 3] 
-				throw new ArgumentException("Неверное количество поворотов при перемешивании Game2");
+			int val = this[x, y];
 
-			for (int i = 1; i <= count; i++)
-			{
-				int val = this[x, y];
-
-				this[x, y] = this[x + 1, y];
-				this[x + 1, y] = this[x + 1, y + 1];
-				this[x + 1, y + 1] = this[x, y + 1];
-				this[x, y + 1] = val;
-			}
+			this[x, y] = this[x, y + 1];
+			this[x, y + 1] = this[x + 1, y];
+            this[x + 1, y] = val;
 		}
 
 
