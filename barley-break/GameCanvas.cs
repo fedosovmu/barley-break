@@ -62,7 +62,7 @@ namespace barley_break
 			SolidBrush formBrush = new SolidBrush(formColor);
 			g.FillRectangle(formBrush, 0, 0, Form1.ActiveForm.Size.Width, Form1.ActiveForm.Size.Height);
 
-			gameSizePlusMinus = new GameSizePlusMinus(g, 240, 500, game.size);
+			gameSizePlusMinus = new GameSizePlusMinus(g, 240, 500, game.Size);
 			gameHistoryPanel = new GameHistoryPanel(g, game, 470, 30);
 
 			newGameButton = new GameButton(g, 360, 500, " New", 95);
@@ -79,7 +79,7 @@ namespace barley_break
 			this.game = game;
 			gameHistoryPanel.OpenGame(game);
 
-			len = lenght / game.size;
+			len = lenght / game.Size;
 			ind = len / 19;
 
 			DrawRoundRec(g, formColor, posX, posY, 440, 440, 10);
@@ -115,13 +115,13 @@ namespace barley_break
 				int X = (x - posX) / len;
 				int Y = (y - posY) / len;
 
-				if ((X >= 0 && X < game.size) && (Y >= 0 && Y < game.size) && (x - posX) > 0 && (y - posY) > 0)
+				if ((X >= 0 && X < game.Size) && (Y >= 0 && Y < game.Size) && (x - posX) > 0 && (y - posY) > 0)
 				{
 					if (game[X, Y] == 0)
 					{
 						DrawItem(X, Y, emptyColor, false);
 					}
-					else if (game[X, Y] == X + Y * game.size + 1)
+					else if (game[X, Y] == X + Y * game.Size + 1)
 					{
 						DrawItem(X, Y, downYellowColor);
 					}
@@ -140,7 +140,7 @@ namespace barley_break
 			int X = (x - posX) / len;
 			int Y = (y - posY) / len;
 
-			if ((X >= 0 && X < game.size) && (Y >= 0 && Y < game.size) && (x - posX) > 0 && (y - posY) > 0)
+			if ((X >= 0 && X < game.Size) && (Y >= 0 && Y < game.Size) && (x - posX) > 0 && (y - posY) > 0)
 			{
 				if (isSuccess == false)
 				{
@@ -184,8 +184,8 @@ namespace barley_break
 
 			Color winColor = Color.FromArgb(200, Color.Black);
 
-			//g.FillRectangle(new SolidBrush(winColor), posX, posY, len * game.size + ind, len * game.size + ind);
-			DrawRoundRec(g, winColor, posX, posY, len * game.size + ind, len * game.size + ind, 10);
+			//g.FillRectangle(new SolidBrush(winColor), posX, posY, len * game.Size + ind, len * game.Size + ind);
+			DrawRoundRec(g, winColor, posX, posY, len * game.Size + ind, len * game.Size + ind, 10);
 
 			Font font = new Font("Consolas", 50, FontStyle.Bold);
 			SolidBrush fontBrush = new SolidBrush(Color.White);
@@ -197,16 +197,16 @@ namespace barley_break
 
 		public void DrawGrid()
 		{
-			DrawRoundRec(g, gridColor, posX, posY, len * game.size + ind, len * game.size + ind, 10);
+			DrawRoundRec(g, gridColor, posX, posY, len * game.Size + ind, len * game.Size + ind, 10);
 
-			for (int i = 0; i < game.size; i++)
-				for (int j = 0; j < game.size; j++)
+			for (int i = 0; i < game.Size; i++)
+				for (int j = 0; j < game.Size; j++)
 				{
 					int value = game[i, j];
 
 					if (value == 0)
 						DrawItem(i, j, emptyColor, false);
-					else if (value == i + j * game.size + 1)
+					else if (value == i + j * game.Size + 1)
 					{
 						DrawItem(i, j, yelowItemColor);
 					}

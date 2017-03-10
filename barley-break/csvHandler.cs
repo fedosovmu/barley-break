@@ -28,12 +28,12 @@ namespace barley_break
 
 		public static void Save(Game3 game, String path)
 		{
-            String[] lines = new String[game.size];
+            String[] lines = new String[game.Size];
 
-            for (int i = 0; i < game.size; i++)
+            for (int i = 0; i < game.Size; i++)
             {
-                int[] values = new int[game.size];
-                for (int j = 0; j < game.size; j++)
+                int[] values = new int[game.Size];
+                for (int j = 0; j < game.Size; j++)
                     values[j] = game[j, i];
 
                 lines[i] = String.Join(",", values);

@@ -10,24 +10,24 @@ namespace barley_break
 	{
 		protected int[] values;
 		protected int[] positions;
-		public readonly int size;
+		public readonly int Size;
 
 
 
 		public Game(params int[] values)
 		{
 			this.values = values;
-			this.size = (int) Math.Sqrt(values.Length);
+			this.Size = (int) Math.Sqrt(values.Length);
 
 			positions = new int[values.Length];
 
-			for (int i = 0; i < Math.Pow(size, 2); i++)
+			for (int i = 0; i < Math.Pow(Size, 2); i++)
 				positions[i] = -1;
 
-			for (int i = 0; i < Math.Pow(size, 2); i++)
+			for (int i = 0; i < Math.Pow(Size, 2); i++)
 			{
 				int val = values[i];
-				if (val >= 0 && val < Math.Pow(size, 2) && positions[val] == -1)
+				if (val >= 0 && val < Math.Pow(Size, 2) && positions[val] == -1)
 					positions[val] = i;
 				else
 					throw new ArgumentException("Неверная инициализация Game");
@@ -38,13 +38,13 @@ namespace barley_break
 
 		public int this[int x, int y]
 		{
-			get { return values[x + size * y]; }
+			get { return values[x + Size * y]; }
 			set
 			{
-				if (value < 0 || value > Math.Pow(size, 2))
+				if (value < 0 || value > Math.Pow(Size, 2))
 					throw new ArgumentException("Ошибка при изменении значения в Game");
-				values[x + size * y] = value;
-				positions[value] = x + size * y;
+				values[x + Size * y] = value;
+				positions[value] = x + Size * y;
 			}
 		}
 
@@ -52,25 +52,25 @@ namespace barley_break
 
 		public Tuple<int, int> GetLocation(int value)
 		{
-			int x = positions[value] % size;
-			int y = positions[value] / size;
+			int x = positions[value] % Size;
+			int y = positions[value] / Size;
 			return new Tuple<int, int> (x, y);
 		}
 
 
 
-		public bool Shift(int value)
+		public virtual bool Shift(int value)
 		{
-			if (value < 0 || value >= Math.Pow(size, 2))
+			if (value < 0 || value >= Math.Pow(Size, 2))
 				throw new ArgumentException("Невозможно передвинуть элемент которого нет в game");
 
 			int pos = positions[value];
-			int x = pos % size;
-			int y = pos / size;
+			int x = pos % Size;
+			int y = pos / Size;
 
 			int posZ = positions[0];
-			int X = posZ % size;
-			int Y = posZ / size;
+			int X = posZ % Size;
+			int Y = posZ / Size;
 
 			bool isNear = (Math.Abs(X - x) == 1 && Y == y) || (X == x && (Math.Abs(Y - y) == 1));
 			if (isNear)

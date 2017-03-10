@@ -52,12 +52,12 @@ namespace barley_break
 			SolidBrush fontBrush = new SolidBrush(GameCanvas.formColor);
 
 			int size = 13;
-			if (game.history.Count < 13)
-				size = game.history.Count;
+			if (game.History.Count < 13)
+				size = game.History.Count;
 
 			for (int i = 0; i < size; i++)
 			{
-				int val = game.history.ElementAt(i);
+				int val = game.History.ElementAt(i);
 				String st = String.Format("{0,2}", val) + " -> 0";	
 
 				g.DrawString(st, font, fontBrush, X + 5, Y + 120 + i * 30);
