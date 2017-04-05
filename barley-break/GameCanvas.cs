@@ -65,7 +65,7 @@ namespace barley_break
 			gameSizePlusMinus = new GameSizePlusMinus(g, 240, 500, game.Size);
 			gameHistoryPanel = new GameHistoryPanel(g, game, 470, 30);
 
-			newGameButton = new GameButton(g, 360, 500, " New", 95);
+			newGameButton = new GameButton(g, 360, 500, "New", 95);
 			openGameButton = new GameButton(g, 30, 500, "Load");
 			saveGameButton = new GameButton(g, 130, 500, "Save");
 
@@ -221,7 +221,7 @@ namespace barley_break
 
 		private void DrawItem(int x, int y, Color color, bool showValue = true)
 		{
-			int fontSize = len / 2;
+			int fontSize = len / 2 - 2;
 			Font font = new Font("Arial", fontSize);
 			SolidBrush fontBrush = new SolidBrush(fontColor);
 
@@ -230,9 +230,21 @@ namespace barley_break
 			int value = game[x, y];
 			String st = value.ToString();
 
-			DrawRoundRec(g, color, X, Y, len - ind, len - ind);
+            var format = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center,
+                FormatFlags = StringFormatFlags.FitBlackBox
+            };
+            var rec = new Rectangle(X, Y, len - ind, len - ind);
+
+
+            DrawRoundRec(g, color, X, Y, len - ind, len - ind);
+
 			if (showValue)
-				g.DrawString(st, font, fontBrush, X, Y);								
+            {
+				g.DrawString(st, font, fontBrush, rec, format);	
+            }
 		}	
 
 
@@ -243,15 +255,15 @@ namespace barley_break
 			if (round == 0)
 				round = height / 5;
 
-			g.FillPie(brush, new Rectangle(x, y, round, round), 180, 90);
-			g.FillPie(brush, new Rectangle(x + width - round, y, round, round), 270, 90);
-			g.FillPie(brush, new Rectangle(x + width - round, y + height - round, round, round), 0, 90);
-			g.FillPie(brush, new Rectangle(x, y + height - round, round, round), 90, 90);
+			g.FillPie(brush, new Rectangle(x, y, round + 1, round + 1), 180, 90);
+			g.FillPie(brush, new Rectangle(x + width - round - 1, y, round + 1, round + 1), 270, 90);
+			g.FillPie(brush, new Rectangle(x + width - round - 1, y + height - round - 1, round + 1, round + 1), 0, 90);
+			g.FillPie(brush, new Rectangle(x, y + height - round - 1, round + 1, round + 1), 90, 90);
 
 			int hround = (round + 1) / 2;
 
-			g.FillRectangle(brush, x, y + hround, hround, height - round);
-			g.FillRectangle(brush, x + width - hround, y + hround, hround, height - round);
+			g.FillRectangle(brush, x, y + hround, hround + 1, height - round);
+			g.FillRectangle(brush, x + width - hround - 1, y + hround, hround + 1, height - round);
 			g.FillRectangle(brush, x + hround, y, width - round, height);
 		}
 	}

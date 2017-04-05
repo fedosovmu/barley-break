@@ -34,6 +34,7 @@ namespace barley_break
 
 			btm = new Bitmap(this.Size.Width, this.Size.Height);
 			Graphics g = Graphics.FromImage(btm);
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
 			gameCanvas = new GameCanvas(g, game);
 

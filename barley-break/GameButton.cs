@@ -100,8 +100,16 @@ namespace barley_break
 
 			SolidBrush fontBrush = new SolidBrush(textColor);
 			Font font = new Font("Arial", 16, FontStyle.Bold);
+            var format = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center,
+                FormatFlags = StringFormatFlags.FitBlackBox
+            };
+            var rec = new Rectangle(X, Y, Width, Height);
 
-			g.DrawString(Text, font, fontBrush, X + indW, Y + indH);
+
+            g.DrawString(Text, font, fontBrush, rec, format);
 		}
 
 	}
